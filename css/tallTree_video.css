@@ -1,0 +1,703 @@
+/***             _       _     _                           
+__   ____ _ _ __(_) __ _| |__ | | ___  ___ 
+\ \ / / _` | '__| |/ _` | '_ \| |/ _ \/ __|
+ \ V / (_| | |  | | (_| | |_) | |  __/\__ \
+  \_/ \__,_|_|  |_|\__,_|_.__/|_|\___||___/
+***/
+/***                             _ 
+  __ _  ___ _ __   ___ _ __ __ _| |
+ / _` |/ _ \ '_ \ / _ \ '__/ _` | |
+| (_| |  __/ | | |  __/ | | (_| | |
+ \__, |\___|_| |_|\___|_|  \__,_|_|
+ |___/                             
+***/
+body {
+  background-color: #ebebe5;
+  font-family: Tahoma, Geneva, sans-serif;
+}
+
+p {
+  margin-bottom: 0px;
+}
+
+#banner {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  background-color: #fbfae6;
+  height: 165px;
+  border-bottom: 5px solid darkgray;
+}
+
+#leftlogo {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+
+#rightlogo {
+  position: absolute;
+  bottom: 10px;
+  right: 0px;
+  height: 130px;
+}
+
+#navbar {
+  position: absolute;
+  top: 165px;
+  left: 0px;
+  width: 100%;
+  background-color: #666;
+  color: white;
+  height: 20px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#navbar span {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-left: 2px solid lightgray;
+}
+
+#page {
+  box-shadow: 1px 1px 10px darkgray;
+  width: 670px;
+  position: relative;
+  top: 200px;
+  left: 300px;
+  padding: 30px;
+  padding-bottom: 40px;
+  background-color: white;
+}
+
+#sideNav {
+  position: fixed;
+  left: 0px;
+  top: 200px;
+  width: 200px;
+  color: white;
+  z-index: 20000;
+  background-color: #333;
+  font-size: 13px;
+}
+
+#sideNav ul {
+  list-style: none;
+  background-color: gray;
+  padding-left: 0;
+  box-shadow: 1px 1px 10px darkgray;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.pathet {
+  padding: 5px;
+  font-weight: bold;
+  font-size: 16px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.scene {
+  border-bottom: 1px solid white;
+  padding: 10px;
+  margin-left: 10px;
+}
+
+.current {
+  background-color: #555;
+  border-bottom: 0px solid transparent;
+}
+
+#showHide {
+  margin-top: 5px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+}
+
+#sideNav li a {
+  color: white;
+  text-decoration: none;
+}
+
+#sideNav li a:hover {
+  color: lightgray;
+}
+
+/*This is for the image and waveform section */
+#multimedia {
+  border: 1px solid #999;
+  border-radius: 5px;
+  position: fixed;
+  right: 20px;
+  top: 220px;
+  width: 700px;
+  max-width: 700px;
+  background-color: black;
+  box-shadow: 5px 5px 10px darkgray;
+}
+
+#wayang_video {
+  position: relative;
+  width: 700px;
+}
+
+#subtitles {
+  background-color: black;
+  color: white;
+  max-width: 700px;
+  padding: 10px;
+}
+
+#menu {
+  position: relative;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  background-color: #333;
+  color: white;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: move;
+}
+
+#waveform {
+  position: relative;
+  margin-top: 30px;
+}
+
+#image {
+  position: relative;
+  display: none;
+  top: 20px;
+}
+
+#image img {
+  position: relative;
+  left: 135px;
+  height: 200px;
+  width: 300px;
+}
+
+#imageCaption {
+  position: relative;
+  text-align: center;
+}
+
+#clock {
+  position: absolute;
+  color: darkblue;
+  font-size: 20px;
+  bottom: 130px;
+  left: 10px;
+}
+
+#play {
+  background-color: darkblue;
+  color: white;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 3px;
+  position: relative;
+  left: 50%;
+  width: 70px;
+  padding: 4px;
+  margin-left: -32px;
+  cursor: pointer;
+  text-align: center;
+  display: none;
+  margin-top: 30px;
+}
+
+/* OTHER ELEMENTS */
+#video {
+  position: fixed;
+  top: 0px;
+  right: 600px;
+  height: 30px;
+  background-color: darkgray;
+  border: 1px solid black;
+  font-size: 30px;
+  z-index: 9.999999999999999e+25;
+  display: none;
+}
+
+#blind {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: lightgray;
+  opacity: 0.7;
+  display: none;
+}
+
+#close {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  display: none;
+  z-index: 1.111111111111111e+43;
+  font-size: 30px;
+  height: 50px;
+  /*border-bottom:3px solid #999;*/
+}
+
+#annotationTitle {
+  position: absolute;
+  left: 10px;
+  top: 5px;
+  font-style: italic;
+  color: #666;
+}
+
+#close_btn {
+  position: absolute;
+  color: #666;
+  right: -8px;
+  top: -13px;
+  font-size: 40px;
+  cursor: pointer;
+}
+
+#loadingText {
+  position: fixed;
+  right: 250px;
+  top: 300px;
+  color: #3498db;
+  font-size: 20px;
+}
+
+.loader {
+  position: fixed;
+  right: 200px;
+  top: 200px;
+  border: 16px solid #f3f3f3;
+  /* Light grey */
+  border-top: 16px solid #3498db;
+  /* Blue */
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+#annotationText {
+  position: absolute;
+  left: 25%;
+  width: 40%;
+  white-space: normal;
+  background-color: white;
+  z-index: 11111111111111;
+  display: none;
+  box-shadow: 1px 1px 10px darkgray;
+  padding: 5%;
+}
+
+#annotationText p {
+  text-indent: 20px;
+  margin-top: 0px;
+  position: relative;
+  margin-bottom: 0px;
+}
+
+#annotationText img {
+  width: 100%;
+  position: relative;
+}
+
+.smallCircle {
+  position: relative;
+  bottom: -1px;
+}
+
+.bigCircle {
+  position: relative;
+  bottom: 0px;
+}
+
+/*** _                _                _       _         _           
+	| |_ ___  _ __   | | _____   _____| |  ___| |_ _   _| | ___  ___ 
+	| __/ _ \| '_ \  | |/ _ \ \ / / _ \ | / __| __| | | | |/ _ \/ __|
+	| || (_) | |_) | | |  __/\ V /  __/ | \__ \ |_| |_| | |  __/\__ \
+	 \__\___/| .__/  |_|\___| \_/ \___|_| |___/\__|\__, |_|\___||___/
+	         |_|                                   |___/             
+***/
+.musicBox, .silenceBox, .topOpenMusicBox, .bottomOpenMusicBox {
+  width: 622px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.musicBox {
+  border: 2px solid gray;
+}
+
+.silenceBox {
+  border: 2px solid white;
+}
+
+.topOpenMusicBox {
+  border-bottom: 2px solid gray;
+  border-left: 2px solid gray;
+  border-right: 2px solid gray;
+}
+
+.bottomOpenMusicBox {
+  border-top: 2px solid gray;
+  border-left: 2px solid gray;
+  border-right: 2px solid gray;
+}
+
+.bigTitle {
+  position: relative;
+  width: 600px;
+  margin-top: 100px;
+  margin-bottom: 100px;
+  font-size: 40px;
+  text-align: center;
+}
+
+.title {
+  position: relative;
+  margin-top: 50px;
+  width: 600px;
+  margin-left: 10px;
+  margin-bottom: 80px;
+  text-align: center;
+}
+
+.titleText {
+  text-align: center;
+  font-size: 25px;
+}
+
+.nonTimedNarration {
+  /*color:#333;*/
+}
+
+.emptyLine {
+  position: relative;
+  height: 30px;
+}
+
+/*FIRST AND SECOND ARE PART OF NARRATION*/
+.narration {
+  border-bottom: 2px solid lightblue;
+}
+
+.narration:hover, .cont:hover {
+  cursor: pointer;
+}
+
+.first {
+  text-align: justify;
+  moz-text-align-last: left;
+  text-justify: inter-word;
+  text-align-last: left;
+  font-size: 15px;
+  line-height: 25px;
+  width: 600px;
+  margin-left: 10px;
+}
+
+.newParagraph {
+  text-align: justify;
+  moz-text-align-last: left;
+  text-justify: inter-word;
+  text-align-last: left;
+  font-size: 15px;
+  line-height: 25px;
+  width: 600px;
+  margin-left: 10px;
+  margin-top: 20px;
+}
+
+.second {
+  text-align: justify;
+  -moz-text-align-last: left;
+  text-justify: inter-word;
+  text-align-last: left;
+  width: 600px;
+  font-size: 15px;
+  line-height: 25px;
+  text-indent: 20px;
+  margin-left: 10px;
+}
+
+.floatLeft {
+  float: left;
+}
+
+.center {
+  text-align: center;
+}
+
+/*CONT IS THE ULTIMATE INNER ELEMENT */
+.cont {
+  position: relative;
+  line-height: 30px;
+}
+
+.cont:hover div {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+div.cont:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/*                                       _       _ _       _                                                                                      _       _ _       _                        
+ ___  ___  _ __   __ _    __ _ _ __   __| |   __| (_) __ _| | ___   __ _ _   _  ___ 
+/ __|/ _ \| '_ \ / _` |  / _` | '_ \ / _` |  / _` | |/ _` | |/ _ \ / _` | | | |/ _ \
+\__ \ (_) | | | | (_| | | (_| | | | | (_| | | (_| | | (_| | | (_) | (_| | |_| |  __/
+|___/\___/|_| |_|\__, |  \__,_|_| |_|\__,_|  \__,_|_|\__,_|_|\___/ \__, |\__,_|\___|
+                 |___/                                             |___/            
+
+*/
+.song {
+  width: 600px;
+  margin-left: 10px;
+  position: relative;
+  font-size: 16px;
+  text-align: center;
+  border: 1px solid black;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.cant {
+  width: 620px;
+  font-size: 15px;
+  position: relative;
+  border: 1px solid transparent;
+  padding-bottom: 10px;
+  margin-bottom: 25px;
+  margin-top: 25px;
+}
+
+.cantDidascalia {
+  text-align: center;
+  font-size: 15px;
+}
+
+.didascalia {
+  text-align: center;
+  font-size: 15px;
+  margin-bottom: 25px;
+  margin-top: 25px;
+}
+
+.cantTitle {
+  position: relative;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.dialogue {
+  position: relative;
+  width: 620px;
+  font-size: 15px;
+}
+
+.speaker {
+  position: relative;
+  width: 620px;
+  font-size: 15px;
+}
+
+.interjection {
+  position: relative;
+  width: 620px;
+  font-size: 15px;
+}
+
+.speakerCant {
+  position: relative;
+  width: 620px;
+  font-size: 15px;
+  /*line-height:25px;
+  width:$inner;
+  margin-left:$left;
+  margin-top:30px;*/
+}
+
+.english {
+  width: 250px;
+  left: 50px;
+  margin-left: 10px;
+  padding-right: 15px;
+  text-indent: -30px;
+  border-right: 2px solid darkgray;
+  position: relative;
+  display: table-cell;
+}
+
+.javanese {
+  width: 235px;
+  margin-left: 10px;
+  left: 100px;
+  text-indent: -30px;
+  position: relative;
+  display: table-cell;
+}
+
+.speaker .english, .speaker .javanese {
+  text-indent: -40px;
+}
+
+.stageDirection {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-style: italic;
+}
+
+i {
+  font-style: normal;
+}
+
+/***                     _        _   _                 
+  __ _ _ __  _ __   ___ | |_ __ _| |_(_) ___  _ __  ___ 
+ / _` | '_ \| '_ \ / _ \| __/ _` | __| |/ _ \| '_ \/ __|
+| (_| | | | | | | | (_) | || (_| | |_| | (_) | | | \__ \
+ \__,_|_| |_|_| |_|\___/ \__\__,_|\__|_|\___/|_| |_|___/
+
+***/
+.dialogue .annotationColumn, .speaker .annotationColumn, .speakerCant .annotationColumn, .cant .annotationColumn, .newParagraph .annotationColumn {
+  display: table-cell;
+  vertical-align: top;
+  position: absolute;
+  top: 0px;
+}
+
+.title .annotationColumn {
+  position: absolute;
+  left: 630px;
+}
+
+.first .annotationColumn {
+  position: absolute;
+  left: 670px;
+}
+
+.newParagraph .annotationColumn {
+  background-color: blue;
+  position: absolute;
+  left: 670px;
+}
+
+.second .annotationColumn {
+  position: absolute;
+  left: 650px;
+}
+
+.cant .annotationColumn {
+  position: absolute;
+  left: 640px;
+}
+
+.dialogue .annotationColumn {
+  position: absolute;
+  left: 640px;
+}
+
+.speaker .annotationColumn {
+  position: absolute;
+  left: 640px;
+}
+
+.speakerCant .annotationColumn {
+  position: absolute;
+  left: 640px;
+}
+
+.didascalia .annotationColumn {
+  margin-top: -20px;
+  position: absolute;
+  left: 672px;
+}
+
+.annotation {
+  cursor: pointer;
+}
+
+.annotation:hover {
+  color: blue;
+}
+
+/*debugging*/
+/*
+.title{
+			background-color:lightgray;
+			border:1px solid black;
+		}
+
+		.narration{
+
+			background-color:lightgray;
+			border:1px solid black;
+		}
+
+		.song{
+
+			background-color:lightgray;
+			border:1px solid black;
+
+		}
+
+		.dialogue{
+
+			border:1px solid black;
+
+		}
+
+		.cont{
+
+			border:1px dotted black;
+		}
+
+
+		.english{
+
+			background-color:red
+		}
+
+		.javanese{
+
+			background-color:lightblue;
+		}
+
+		.annotationColumn{
+
+			background-color:blue;
+
+		}
+
+		#annotationText{
+
+			border:1px solid black;
+
+		}
+		*/
+
+/*# sourceMappingURL=tallTree_video.css.map */
