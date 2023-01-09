@@ -1,7 +1,7 @@
 //Last update: 17:27, 11\06\2019
 var fig = "1p1"
 var timerPaused = false;
-var currentStartTime = 0;
+
 $(document).ready(function(){
 
 	$("#loadingText").css("display","none");
@@ -52,44 +52,59 @@ $(document).ready(function(){
 	mp4_source = "video/"+fileName+".m4v";
 	var wayangPlayer = videojs('wayang_video');
 	videojs("wayang_video").src([{type:"video/mp4", src: mp4_source}]);
-    var timer = setInterval(displayTime,100);
-	
-	//displaytime
-	function displayTime(){
-		if (timerPaused == false){
-			needleHead = Math.floor(wayangPlayer.currentTime()*10);
-			if (needleHead >= nextStartTime){ 
-				currentDiv ++;
-				
-				currentStartTime = startTimes[currentDiv];	
-				nextStartTime = startTimes[currentDiv+1];	
-				$(".cont,.narration,.cantDidascalia,.didascalia").css("background-color","white");
-				
-				//all other identical start times
-				var indexes = [], i;
-				for(i = 0; i < startTimes.length; i++){
-					if (startTimes[i] === currentStartTime){
-						indexes.push(i);
-					}
-				}
-				
-				currentText = ""
-				for(i = 0; i < indexes.length; i++){
-					$("#"+indexes[i]).css("background-color","lightblue");
-					currentText += "<p>" + $("#"+indexes[i]).html()
-				}
-				$("#subtitles").html(currentText);
-		
-				if ($("#"+currentDiv).visible()) {
-					//console.log('in view');
-				} else {
-					$('html, body').animate({
-						scrollTop: $("#" + currentDiv).offset().top
-					}, 500);
-				}					
+
+	// Tracks
+	const engSub = {
+		kind: "subtitles",
+		id: "0",
+		label: "English",
+		src: "vtt/P6-4+5_en.vtt",
+	};
+	const javaSub = {
+		kind: "subtitles",
+		id: "1",
+		label: "Javanese",
+		src: "vtt/P6-4+5_java.vtt",
+	};
+	const descSub = {
+		kind: "subtitles",
+		id: "2",
+		label: "Description",
+		src: "vtt/P6-4+5_desc.vtt",
+	};
+	wayangPlayer.addRemoteTextTrack(engSub);
+	wayangPlayer.addRemoteTextTrack(javaSub);
+	wayangPlayer.addRemoteTextTrack(descSub);
+	const tracks = wayangPlayer.remoteTextTracks().tracks_;
+	// Not using track directly but it provides some useful methods to be utilized
+	tracks.forEach(t => t.mode = "hidden");
+
+	// Sync subtitle and text when video is playing
+	wayangPlayer.on("timeupdate", () => {
+		// Any track is fine as they are expected to be consistent
+		const id = tracks[0].activeCues[0].id;
+
+		// Get text ids of same start time
+		const ids = [];
+		for (let i = 0; i < startTimes.length; i++) {
+			if (startTimes[i] == startTimes[id]) {
+				ids.push(i);
 			}
 		}
-	}
+
+		// Set subtitles
+		const subtitles = ids.reduce((prev, id) => prev + $("#" + id).html(), "") ;
+		$("#subtitles").html(subtitles);
+		
+		// Highlight text
+		$(".cont, .narration, .cantDidascalia, .didascalia").css("background-color", "white");
+		ids.forEach((id) => $("#" + id).css("background-color", "lightblue"))
+		if (!$("#" + id).visible()) {
+			$('html, body').animate({
+				scrollTop: $("#" + id).offset().top,
+			}, 500);
+		}	
+	})
 	
 	//Text
 	$(".cont,.narration,.cantDidascalia,.didascalia").click(function(e){
@@ -122,13 +137,6 @@ $(document).ready(function(){
 			}
 			$("#subtitles").html(currentText);		
 		}
-	});
-	
-	//seek function
-	wayangPlayer.on("seeking", function (e) {
-		droppedTime = Math.floor(wayangPlayer.currentTime()*10)
-		//findTime(droppedTime);
-		//console.log(droppedTime);
 	});
 	
 	//Annotation
