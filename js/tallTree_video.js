@@ -1,6 +1,5 @@
 //Last update: 17:27, 11\06\2019
 var fig = "1p1"
-var timerPaused = false;
 
 $(document).ready(function(){
 
@@ -32,20 +31,6 @@ $(document).ready(function(){
 			$(".narration").css("display","none");
 			$(".nonTimedNarration").css("display","none");
 		}
-	});
-
-	//Close
-	$("#close_btn").click(function(e){
-		$("#annotationText").fadeOut("fast");
-		$("#blind").css("display","none");
-		timerPaused = false;
-		report = [];
-		report["origin"] = "close button";
-		report["currentTime"] = currentTime;
-		report["currentDiv"] = currentDiv;
-		console.log(report);
-		//wavesurfer.play();
-		
 	});
 
 	//wayangPlayer
@@ -115,65 +100,29 @@ $(document).ready(function(){
 		wayangPlayer.currentTime(soughtTime);
 	});
 	
-	//Annotation
-	$(".annotation").click(function(e){
-		
-		//pause
-		if (!wayangPlayer.paused()){
-			wayangPlayer.pause()
-		}
-		timerPaused = true;
-				
-		//read the values
-		$("#theText").html($(this).data()["annotation"]);
-		ref = $(this).data()["ref"];
-		
-		//calculate the offset
-		currentTime = wayangPlayer.currentTime();
-		currentDiv = ref;
-		soughtTime = parseInt($("#" + currentDiv).data()["time"])/10;
-				
-		//move the player needle
-		wayangPlayer.currentTime(soughtTime);
-		nextStartTime = startTimes[parseInt(this.id)+1];
-				
-		$(".cont,.narration,.cantDidascalia,.didascalia").css("background-color","white");
-		
-		//all other identical start times
-		var indexes = [], i;
-		for(i = 0; i < startTimes.length; i++){
-			if (startTimes[i] === soughtTime * 10){
-				indexes.push(i);
-			}
-		}
-		
-		for(i = 0; i < indexes.length; i++){
-			$("#"+indexes[i]).css("background-color","lightblue");
-		}
-		
-		currentText = ""
-		for(i = 0; i < indexes.length; i++){
-			$("#"+indexes[i]).css("background-color","lightblue");
-			currentText += "<p>" + $("#"+indexes[i]).html()
-		}
-		
-		$("#subtitles").html(currentText);				
-		
-		//display annotation
-		$("#annotationText").css("display","block");
-		tops = $(window).scrollTop();
-		$("#annotationText").css("top",tops + 100);
-		$("#blind").css("display","block");
-		report = [];
-		report["ref"] = ref;
-		report["origin"] = "annotation button";
-		report["sought time"] = soughtTime;
-		report["currentTime"] = currentTime;
-		report["currentDiv"] = currentDiv;
-		report["indexes"] = indexes;
-		console.log(report);
+	// Open annotation
+	$(".annotation").click((e) => {
+		// Pause video
+		wayangPlayer.pause();		
 
+		// Seek video
+		const soughtTime = startTimes[e.currentTarget.dataset.ref] / 10 + 1;
+		wayangPlayer.currentTime(soughtTime);
+				
+		// Set annotation text
+		const annotation = e.currentTarget.dataset.annotation;
+		$("#theText").html(annotation);
+
+		// Display annotation
+		$("#annotationText").css("display", "block");
+		tops = $(window).scrollTop();
+		$("#annotationText").css("top", tops + 100);
+		$("#blind").css("display", "block");
 	});
 
+	// Close annotation
+	$("#close_btn").click(() => {
+		$("#annotationText").fadeOut("fast");
+		$("#blind").css("display", "none");
+	});
 });
-
