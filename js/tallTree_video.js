@@ -106,37 +106,13 @@ $(document).ready(function(){
 		}	
 	})
 	
-	//Text
-	$(".cont,.narration,.cantDidascalia,.didascalia").click(function(e){
-		//Sometimes a 'double' empty object is fired... not sure why. This is a temporary hack to be corrected later.
-		if (! jQuery.isEmptyObject($(this).data())){
-			currentTime = wayangPlayer.currentTime();
-			soughtTime = (parseInt($(this).data()["time"]))/10;		
-			currentDiv = this.id;
-			wayangPlayer.currentTime(soughtTime);
-			nextStartTime = startTimes[parseInt(this.id)+1];
-			
-			$(".cont,.narration,.cantDidascalia,.didascalia").css("background-color","white");
-			
-			//all other identical start times
-			var indexes = [], i;
-			for(i = 0; i < startTimes.length; i++){
-				if (startTimes[i] === parseInt($(this).data()["time"])){
-					indexes.push(i);
-				}
-			}
-			
-			for(i = 0; i < indexes.length; i++){
-				$("#"+indexes[i]).css("background-color","lightblue");
-			}
-			
-			currentText = ""
-			for(i = 0; i < indexes.length; i++){
-				$("#"+indexes[i]).css("background-color","lightblue");
-				currentText += "<p>" + $("#"+indexes[i]).html()
-			}
-			$("#subtitles").html(currentText);		
-		}
+	// Sync video when text is clicked
+	// Subtitle and text highlighting will be automatically handled via timeupdate handler 
+	$(".cont, .narration, .cantDidascalia, .didascalia").click((e) => {
+		// Video.js uses second while startTimes array uses 10 * second
+		// +1 so that shift time pass prev interval
+		const soughtTime = startTimes[e.currentTarget.id] / 10 + 1;
+		wayangPlayer.currentTime(soughtTime);
 	});
 	
 	//Annotation
