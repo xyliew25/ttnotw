@@ -1,42 +1,46 @@
 //Last update: 17:27, 11\06\2019
 var fig = "1p1"
 
-$(document).ready(function(){
+$(document).ready(() => {
+	//////////////////////// Loading ////////////////////////
+	$("#loadingText").css("display", "none");
+	$(".loader").css("display", "none");
 
-	$("#loadingText").css("display","none");
-	$(".loader").css("display","none");
+	//////////////////////// Text ////////////////////////
+	$("#englishBox").change((e) => {
+		if (e.target.checked) {
+			$(".english").css("display", "table-cell");
+		} else {
+			$(".english").css("display", "none");
+		}
+	});
+
+	$("#javaneseBox").change((e) => {
+		if (e.target.checked) {
+			$(".javanese").css("display", "table-cell");
+		} else {
+			$(".javanese").css("display", "none");
+		}
+	});
+
+	$("#descriptionBox").change((e) => {
+		if (e.target.checked) {
+			$(".narration").css("display", "table-cell");
+			$(".nonTimedNarration").css("display", "table-cell");
+		} else {
+			$(".narration").css("display", "none");
+			$(".nonTimedNarration").css("display", "none");
+		}
+	});
+
+	//////////////////////// Video ////////////////////////
+	// Setup
 	$("#multimedia").draggable();	
-	
-	$("#englishBox").change(function() {
-	    if(this.checked) {
-			$(".english").css("display","table-cell");
-	    }else{
-			$(".english").css("display","none");
-		}
-	});
-	
-	$("#javaneseBox").change(function() {
-	    if(this.checked) {
-			$(".javanese").css("display","table-cell");
-	    }else{
-			$(".javanese").css("display","none");
-		}
-	});
-	
-	$("#descriptionBox").change(function() {
-	    if(this.checked) {
-			$(".narration").css("display","table-cell");
-			$(".nonTimedNarration").css("display","table-cell");
-	    }else{
-			$(".narration").css("display","none");
-			$(".nonTimedNarration").css("display","none");
-		}
-	});
 
-	//wayangPlayer
-	mp4_source = "video/"+fileName+".m4v";
-	var wayangPlayer = videojs('wayang_video');
-	videojs("wayang_video").src([{type:"video/mp4", src: mp4_source}]);
+	// Source
+	const wayangPlayer = videojs('wayang_video');
+	const source = "video/" + fileName + ".m4v";
+	wayangPlayer.src([{ type: "video/mp4" , src: source } ]);
 
 	// Tracks
 	const engSub = {
@@ -100,6 +104,7 @@ $(document).ready(function(){
 		wayangPlayer.currentTime(soughtTime);
 	});
 	
+	//////////////////////// Annotation ////////////////////////
 	// Open annotation
 	$(".annotation").click((e) => {
 		// Pause video
