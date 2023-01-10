@@ -35,75 +35,23 @@ $(document).ready(() => {
 
 	//////////////////////// Video ////////////////////////
 	// Setup
-	$("#multimedia").draggable();	
-
-	// Source
-	const wayangPlayer = videojs('wayang_video');
-	const source = "video/" + fileName + ".m4v";
-	wayangPlayer.src([{ type: "video/mp4" , src: source } ]);
-
-	// Tracks
+	const src = "video/" + fileName + ".m4v";
 	const engSub = {
-		kind: "subtitles",
-		id: "0",
 		label: "English",
 		src: "vtt/P6-4+5_en.vtt",
 	};
 	const javaSub = {
-		kind: "subtitles",
-		id: "1",
 		label: "Javanese",
 		src: "vtt/P6-4+5_java.vtt",
 	};
 	const descSub = {
-		kind: "subtitles",
-		id: "2",
 		label: "Description",
 		src: "vtt/P6-4+5_desc.vtt",
 	};
-	wayangPlayer.addRemoteTextTrack(engSub);
-	wayangPlayer.addRemoteTextTrack(javaSub);
-	wayangPlayer.addRemoteTextTrack(descSub);
-	const tracks = wayangPlayer.remoteTextTracks().tracks_;
-	// Not using track directly but it provides some useful methods to be utilized
-	tracks.forEach(t => t.mode = "hidden");
+	const subtitles = [engSub, javaSub, descSub];
+	const wayangPlayer = new Video(src, subtitles, startTimes);
+	wayangPlayer.makeVideoDraggable();
 
-	// Sync subtitle and text when video is playing
-	wayangPlayer.on("timeupdate", () => {
-		// Any track is fine as they are expected to be consistent
-		const id = tracks[0].activeCues[0].id;
-
-		// Get text ids of same start time
-		const ids = [];
-		for (let i = 0; i < startTimes.length; i++) {
-			if (startTimes[i] == startTimes[id]) {
-				ids.push(i);
-			}
-		}
-
-		// Set subtitles
-		const subtitles = ids.reduce((prev, id) => prev + $("#" + id).html(), "") ;
-		$("#subtitles").html(subtitles);
-		
-		// Highlight text
-		$(".cont, .narration, .cantDidascalia, .didascalia").css("background-color", "white");
-		ids.forEach((id) => $("#" + id).css("background-color", "lightblue"))
-		if (!$("#" + id).visible()) {
-			$('html, body').animate({
-				scrollTop: $("#" + id).offset().top,
-			}, 500);
-		}	
-	})
-	
-	// Sync video when text is clicked
-	// Subtitle and text highlighting will be automatically handled via timeupdate handler 
-	$(".cont, .narration, .cantDidascalia, .didascalia").click((e) => {
-		// Video.js uses second while startTimes array uses 10 * second
-		// +1 so that shift time pass prev interval
-		const soughtTime = startTimes[e.currentTarget.id] / 10 + 1;
-		wayangPlayer.currentTime(soughtTime);
-	});
-	
 	//////////////////////// Annotation ////////////////////////
 	// Open annotation
 	$(".annotation").click((e) => {
@@ -112,7 +60,7 @@ $(document).ready(() => {
 
 		// Seek video
 		const soughtTime = startTimes[e.currentTarget.dataset.ref] / 10 + 1;
-		wayangPlayer.currentTime(soughtTime);
+		wayangPlayer.seekTo(soughtTime);
 				
 		// Set annotation text
 		const annotation = e.currentTarget.dataset.annotation;
