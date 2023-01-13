@@ -1,6 +1,3 @@
-//Last update: 17:27, 11\06\2019
-var fig = "1p1"
-
 $(document).ready(() => {
 	//////////////////////// Loading ////////////////////////
 	$("#loadingText").css("display", "none");
