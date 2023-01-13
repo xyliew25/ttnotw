@@ -34,22 +34,28 @@ $(document).ready(() => {
 	});
 
 	//////////////////////// Video ////////////////////////
-	// Setup
-	const src = "video/" + fileName + ".m4v";
-	const engSub = {
-		label: "English",
-		src: "vtt/P6-4+5_en.vtt",
-	};
-	const javaSub = {
-		label: "Javanese",
-		src: "vtt/P6-4+5_java.vtt",
-	};
-	const descSub = {
-		label: "Description",
-		src: "vtt/P6-4+5_desc.vtt",
-	};
-	const subtitles = [engSub, javaSub, descSub];
-	const wayangPlayer = new Video(src, subtitles, startTimes);
+	const vidId = "wayang_video";
+	const vidSrcs = [
+		{
+			src: "video/" + fileName + ".m4v",
+			type: "video/mp4",
+		},
+	];
+	const subtitleId = "subtitles";
+	const trackSrcs = [
+		{
+			label: "English",
+			src: "vtt/P6-4+5_en.vtt",
+		},
+		{
+			label: "Javanese",
+			src: "vtt/P6-4+5_java.vtt",
+		},
+	]
+	const textClasses = ["cont", "narration", "cantDidascalia", "didascalia"];
+	const highlightColor = "lightblue";
+
+	const wayangPlayer = new Video(vidId, vidSrcs, trackSrcs, subtitleId, textClasses, highlightColor, startTimes);
 
 	//////////////////////// Annotation ////////////////////////
 	// Open annotation
@@ -59,7 +65,7 @@ $(document).ready(() => {
 
 		// Seek video
 		const soughtTime = startTimes[e.currentTarget.dataset.ref] / 10 + 1;
-		wayangPlayer.seekTo(soughtTime);
+		wayangPlayer.currentTime(soughtTime);
 				
 		// Set annotation text
 		const annotation = e.currentTarget.dataset.annotation;
