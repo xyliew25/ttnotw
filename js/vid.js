@@ -46,13 +46,10 @@ class Video {
       $("#subtitles").html(subtitles);
 
       // Highlight text
-      $(".cont, .narration, .cantDidascalia, .didascalia").css("background-color", "white");
-      ids.forEach((id) => $("#" + id).css("background-color", "lightblue"))
-      if (!$("#" + id).visible()) {
-        $('html, body').animate({
-          scrollTop: $("#" + id).offset().top,
-        }, 500);
-      }
+      const highlighter = new HtmlHighlighter();
+      const textClasses = ["cont", "narration", "cantDidascalia", "didascalia"];
+      highlighter.clearHighlightByClass(textClasses);
+      highlighter.highlightById(ids, highlightColor);
     })
 
     // Sync video when text is clicked
