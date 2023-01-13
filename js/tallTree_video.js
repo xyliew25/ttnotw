@@ -6,6 +6,9 @@ $(document).ready(() => {
 	$("#loadingText").css("display", "none");
 	$(".loader").css("display", "none");
 
+	//////////////////////// Draggable ////////////////////////
+	$("#multimedia").draggable();
+
 	//////////////////////// Text ////////////////////////
 	$("#englishBox").change((e) => {
 		if (e.target.checked) {
@@ -50,7 +53,6 @@ $(document).ready(() => {
 	};
 	const subtitles = [engSub, javaSub, descSub];
 	const wayangPlayer = new Video(src, subtitles, startTimes);
-	wayangPlayer.makeVideoDraggable();
 
 	//////////////////////// Annotation ////////////////////////
 	// Open annotation

@@ -64,10 +64,6 @@ class Video {
       this.vid.currentTime(soughtTime);
     });
   }
-  
-  makeVideoDraggable() {
-    $("#multimedia").draggable();
-  }
 
   pause() {
     this.vid.pause();
